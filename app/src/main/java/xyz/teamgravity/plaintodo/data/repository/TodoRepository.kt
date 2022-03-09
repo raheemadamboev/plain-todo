@@ -1,40 +1,46 @@
-package xyz.teamgravity.plaintodo.data.local
+package xyz.teamgravity.plaintodo.data.repository
 
-import androidx.room.*
 import kotlinx.coroutines.flow.Flow
+import xyz.teamgravity.plaintodo.data.local.TodoDao
 import xyz.teamgravity.plaintodo.data.model.TodoModel
 
-@Dao
-interface TodoDao {
+class TodoRepository(
+    private val dao: TodoDao
+) {
 
     ///////////////////////////////////////////////////////////////////////////
     // Insert
     ///////////////////////////////////////////////////////////////////////////
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTodo(todo: TodoModel)
+    suspend fun insertTodoSync(todo: TodoModel) {
+        dao.insertTodo(todo)
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // Update
     ///////////////////////////////////////////////////////////////////////////
 
-    @Update
-    suspend fun updateTodo(todo: TodoModel)
+    suspend fun updateTodoSync(todo: TodoModel) {
+        dao.updateTodo(todo)
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // Delete
     ///////////////////////////////////////////////////////////////////////////
 
-    @Delete
-    suspend fun deleteTodo(todo: TodoModel)
+    suspend fun deleteTodoSync(todo: TodoModel) {
+        dao.deleteTodo(todo)
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // Get
     ///////////////////////////////////////////////////////////////////////////
 
-    @Query("SELECT * FROM ${TodoConst.TABLE_TODO} WHERE id = :id")
-    suspend fun getTodo(id: Int): TodoModel?
+    suspend fun getTodo(id: Int): TodoModel? {
+        return dao.getTodo(id)
+    }
 
-    @Query("SELECT * FROM ${TodoConst.TABLE_TODO} ORDER BY id ASC")
-    fun getAllTodo(): Flow<List<TodoModel>>
+    fun getAllTodo(): Flow<List<TodoModel>> {
+        return dao.getAllTodo()
+    }
 }
