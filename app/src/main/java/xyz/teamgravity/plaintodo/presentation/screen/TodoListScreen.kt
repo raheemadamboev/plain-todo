@@ -14,7 +14,10 @@ import xyz.teamgravity.plaintodo.presentation.component.TodoCard
 import xyz.teamgravity.plaintodo.presentation.viewmodel.TodoListViewModel
 
 @Composable
-fun TodoListScreen() {
+fun TodoListScreen(
+    onNavigateTodo: (id: Int) -> Unit,
+    onNavigateTodoAdd: () -> Unit
+) {
     val viewmodel = hiltViewModel<TodoListViewModel>()
     val todos by remember(viewmodel) { viewmodel.todos }.collectAsState(initial = emptyList())
     val scaffold = rememberScaffoldState()
@@ -31,11 +34,11 @@ fun TodoListScreen() {
                 }
 
                 is TodoListViewModel.TodoListEvent.NavigateTodo -> {
-
+                    onNavigateTodo(event.todo.id)
                 }
 
                 TodoListViewModel.TodoListEvent.NavigateTodoAdd -> {
-
+                    onNavigateTodoAdd()
                 }
             }
         }
