@@ -1,4 +1,4 @@
-package xyz.teamgravity.plaintodo.ui.theme
+package xyz.teamgravity.plaintodo.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
