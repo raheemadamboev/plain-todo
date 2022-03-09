@@ -19,7 +19,7 @@ fun Navigation() {
         composable(Route.TODO_LIST) {
             TodoListScreen(
                 onNavigateTodo = { id ->
-                    navController.navigate(Route.TODO + "?id={$id}")
+                    navController.navigate(Route.TODO + "?id=$id")
                 },
                 onNavigateTodoAdd = {
                     navController.navigate(Route.TODO_ADD)
